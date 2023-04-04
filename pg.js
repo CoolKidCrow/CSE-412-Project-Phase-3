@@ -34,4 +34,4 @@ async function FetchUser() {
     }
 }
 
-module.exports = { PostMessage, FetchMessages }
+module.exports = { InsertUser, FetchUser }

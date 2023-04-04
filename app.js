@@ -7,7 +7,7 @@ const app = express();
 app.set('view engine', 'ejs')
 
 app.get('/', async (req, res) => {
-    res.render('index', data);
+    res.render('index');
 });
 
 app.listen(3000);
