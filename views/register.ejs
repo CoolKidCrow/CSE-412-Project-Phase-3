@@ -1,4 +1,7 @@
 <h1>Register</h1>
+<% if (failureMessage) { %>
+    <%= failureMessage%>
+<%}%>
 
 <form action="/register" method="post">
     <div>

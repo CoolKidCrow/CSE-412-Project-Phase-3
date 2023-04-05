@@ -16,10 +16,14 @@ client.connect();
 
 async function CreateUser(user) {
     try {
+        let checkEmail = await FetchUserByEmail(user.email);
+        if(checkEmail != null) {
+            return "Email already registered"
+        }
         const query = 'INSERT INTO users (gender, hometown, dob, fName, lName, email, hashPass) VALUES ($1,$2,$3,$4,$5,$6,$7)';
         await client.query(query, [user.gender, user.hometown, user.dob, user.fName, user.lName, user.email, user.hashPass]);
     } catch (err) {
-        console.log(err.stack);
+        console.log(err.message);
     }
 }
 

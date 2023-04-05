@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV  !== "production") {
+if (process.env.NODE_ENV !== "production") {
     require('dotenv').config()
 }
 
@@ -28,7 +28,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.fname + " " + req.user.lname})
+    res.render('index.ejs', { name: req.user.fname + " " + req.user.lname })
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -42,13 +42,13 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('register.ejs');
+    res.render('register.ejs', { failureMessage: req.flash('failure')});
 })
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
         const hashPass = await bcrypt.hash(req.body.password, 10);
-        await database.CreateUser({
+        const result = await database.CreateUser({
             gender: req.body.gender,
             hometown: req.body.hometown,
             dob: req.body.dob,
@@ -57,7 +57,12 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
             email: req.body.email,
             hashPass: hashPass
         })
-        res.redirect('/login')
+        if (result === "Email already registered") {
+            req.flash('failure', result)
+            res.redirect('/register')
+        } else {
+            res.redirect('/login')
+        }
     } catch (err) {
         res.redirect('/register')
         console.log(err);
@@ -66,7 +71,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 
 app.get('/logout', (req, res) => {
     req.logout((err) => {
-        if(err) {
+        if (err) {
             return res.redirect("/")
         }
         return res.redirect('/login')
@@ -74,7 +79,7 @@ app.get('/logout', (req, res) => {
 })
 
 function checkAuthenticated(req, res, next) {
-    if(req.isAuthenticated()) {
+    if (req.isAuthenticated()) {
         return next()
     }
 
@@ -82,7 +87,7 @@ function checkAuthenticated(req, res, next) {
 }
 
 function checkNotAuthenticated(req, res, next) {
-    if(req.isAuthenticated()) {
+    if (req.isAuthenticated()) {
         return res.redirect('/')
     }
 
