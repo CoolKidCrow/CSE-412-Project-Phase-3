@@ -78,6 +78,22 @@ app.get('/logout', (req, res) => {
     })
 })
 
+
+app.get('/friendsearch', checkAuthenticated, (req, res) => {
+    res.render('friendsearch.ejs', { users: req.flash('users')})
+})
+
+app.post('/friendsearch', checkAuthenticated, async (req,res) => {
+    const result = await database.SearchForUserByName(req.body.name);
+    req.flash('users', result);
+    res.redirect('/friendsearch');
+})
+
+app.post('/addfriend', checkAuthenticated, async (req, res) => {
+    await database.CreateFriendship(req.user.uid, req.body.fid)
+    res.redirect('/friendsearch')
+})
+
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()

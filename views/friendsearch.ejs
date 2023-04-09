@@ -1,0 +1,24 @@
+<div>
+    <div>
+        <form action="/friendsearch" method="post">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
+            </div>
+
+            <button type="submit">Search</button>
+        </form>
+        <a href="/">Homepage</a>
+    </div>
+    <div id="match-list">
+        <% users.forEach(function(row) { %>
+            <div style="display: flex; flex-direction: row;">
+                <form method="POST" action="/addfriend">
+                    <input type="hidden" name="fid" value="<%= row.uid %>">
+                    <label><%= row.fname + " " + row.lname %></label>
+                    <button type="submit">Add Friend</button>
+                  </form>
+            </div>
+        <% }); %>
+    </div>
+</div>

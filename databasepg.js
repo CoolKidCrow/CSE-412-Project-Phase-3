@@ -47,4 +47,25 @@ async function FetchUserByUID(uid) {
     }
 }
 
-module.exports = { CreateUser, FetchUserByEmail, FetchUserByUID}
+async function CreateFriendship(uid, fid)
+{
+    try {
+        const query = 'INSERT INTO Friends (UID, FID) VALUES ($1,$2)';
+        await client.query(query, [uid, fid]);
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+async function SearchForUserByName(name)
+{
+    try{
+        const query = "SELECT * FROM Users WHERE fname LIKE $1";
+        let user = await client.query(query, [`${name}%`]);
+        return user.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+module.exports = { CreateUser, FetchUserByEmail, FetchUserByUID, CreateFriendship, SearchForUserByName}

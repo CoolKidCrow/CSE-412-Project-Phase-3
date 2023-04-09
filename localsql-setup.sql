@@ -1,4 +1,5 @@
 DROP TABLE Users;
+DROP TABLE Friends;
 
 CREATE TABLE Users (
     UID serial,
@@ -11,4 +12,12 @@ CREATE TABLE Users (
 	hashPass varchar(255) NOT NULL,
 	
 	PRIMARY KEY (UID)
+);
+
+CREATE TABLE Friends (
+	UID serial NOT NULL REFERENCES Users(UID),
+	FID serial NOT NULL REFERENCES Users(UID),
+	date timestamp default current_timestamp,
+	
+	PRIMARY KEY (UID, FID)
 );

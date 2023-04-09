@@ -7,10 +7,17 @@
 </head>
 
 <body>
-    <form action="/logout" method="get">
-        <button type="submit">Log Out</button>
-    </form>
-    <h1>Logged in as <%= name%>!</h1>
+    <div id="topbar" style="display: flex; flex-direction: row; align-items: center;">
+        <form action="/logout" method="get">
+            <button type="submit">Log Out</button>
+        </form>
+
+        <h4>Logged in as <%= name%>!</h4>
+
+        <a href="/friendsearch">Add Friend</a>
+    </div>
+
+    
 </body>
 
 </html>
