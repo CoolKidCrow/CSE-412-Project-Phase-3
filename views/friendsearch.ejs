@@ -1,4 +1,5 @@
 <div>
+    <h1>Friend Search</h1>
     <div>
         <form action="/friendsearch" method="post">
             <div>
@@ -17,7 +18,7 @@
                     <input type="hidden" name="fid" value="<%= row.uid %>">
                     <label><%= row.fname + " " + row.lname %></label>
                     <button type="submit">Add Friend</button>
-                  </form>
+                </form>
             </div>
         <% }); %>
     </div>

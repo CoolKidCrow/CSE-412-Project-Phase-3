@@ -7,14 +7,23 @@
 </head>
 
 <body>
-    <div id="topbar" style="display: flex; flex-direction: row; align-items: center;">
+    <h1>Homepage</h1>
+    <div id="topbar" style="display: flex; flex-direction: row; align-items: center; column-gap: 20px;">
         <form action="/logout" method="get">
             <button type="submit">Log Out</button>
         </form>
 
         <h4>Logged in as <%= name%>!</h4>
 
-        <a href="/friendsearch">Add Friend</a>
+        <a href="/friendsearch">Search for Friend</a>
+
+        <a href="/friendlist/<%= uid %>">Friends List</a>
+
+        <a href="/account">Account</a>
+    </div>
+
+    <div>
+        
     </div>
 
     

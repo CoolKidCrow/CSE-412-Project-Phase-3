@@ -1,0 +1,11 @@
+<h1>Friend's List</h1>
+<a href="/">Homepage</a>
+<div>
+    <div id="friend-list">
+        <% friends.forEach(function(row) { %>
+            <div style="display: flex; flex-direction: row;">
+                <a href="/profile/<%= row.fid %>"><%= row.fname + " " + row.lname %></a>
+            </div>
+            <% }); %>
+    </div>
+</div>

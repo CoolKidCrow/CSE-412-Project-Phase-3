@@ -1,0 +1,29 @@
+<div>
+    <h1>Account</h1>
+    <form action="/account" method="post">
+        <div>
+            <label for="fName">First Name</label>
+            <input type="text" id="fname" name="fname" value="<%= user.fname%> ">
+        </div>
+        <div>
+            <label for="lName">Last Name</label>
+            <input type="text" id="lname" name="lname" value="<%= user.lname%>">
+        </div>
+        <div>
+            <label for="gender">Gender</label>
+            <input type="text" id="gender" name="gender" value="<%= user.gender%>">
+        </div>
+        <div>
+            <label for="dob">Date Of Birth</label>
+            <input type="text" id="dob" name="dob" value="<%= user.dob%>">
+        </div>
+        <div>
+            <label for="hometown">Hometown</label>
+            <input type="text" id="hometown" name="hometown" value="<%= user.hometown%>">
+        </div>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <a href="/">Homepage</a>
+</div>

@@ -28,7 +28,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.fname + " " + req.user.lname })
+    res.render('index.ejs', { name: req.user.fname + " " + req.user.lname, uid: req.user.uid})
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -52,8 +52,8 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
             gender: req.body.gender,
             hometown: req.body.hometown,
             dob: req.body.dob,
-            fName: req.body.fName,
-            lName: req.body.lName,
+            fname: req.body.fname,
+            lname: req.body.lname,
             email: req.body.email,
             hashPass: hashPass
         })
@@ -84,7 +84,7 @@ app.get('/friendsearch', checkAuthenticated, (req, res) => {
 })
 
 app.post('/friendsearch', checkAuthenticated, async (req,res) => {
-    const result = await database.SearchForUserByName(req.body.name);
+    const result = await database.FetchUserByName(req.body.name);
     req.flash('users', result);
     res.redirect('/friendsearch');
 })
@@ -94,6 +94,43 @@ app.post('/addfriend', checkAuthenticated, async (req, res) => {
     res.redirect('/friendsearch')
 })
 
+app.get('/account', checkAuthenticated, (req, res) => {
+    res.render('account.ejs', { user: req.user})
+})
+
+app.post('/account', checkAuthenticated, async (req, res) => {
+    await database.UpdateAccountInfo({
+        gender: req.body.gender,
+        hometown: req.body.hometown,
+        dob: req.body.dob,
+        fname: req.body.fname,
+        lname: req.body.lname,
+        uid: req.user.uid
+    })
+    res.redirect('/account')
+})
+
+app.get('/friendlist/:uid', checkAuthenticated, async (req, res) => {
+    const result = await database.FetchFriendsOfUserByUID(req.params.uid);
+    res.render('friendlist.ejs', {friends : result})
+})
+
+app.get('/profile/:uid', checkAuthenticated, async (req, res) => {
+    const result = await database.FetchUserByUID(req.params.uid);
+    res.render('profile.ejs', {user : result})
+})
+
+
+
+
+
+
+
+
+
+
+
+//middleware
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
