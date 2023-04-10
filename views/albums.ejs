@@ -1,0 +1,57 @@
+<script>
+    function toggleMenu() {
+        var menu = document.getElementById("menu");
+        if (menu.style.display === "none") {
+            menu.style.display = "block";
+        } else {
+            menu.style.display = "none";
+        }
+    }
+</script>
+
+<style>
+    .menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1;
+        display: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 50px;
+        margin: 50px;
+        list-style: none;
+    }
+</style>
+
+<div id="menu" style="position: absolute; z-index: 1; background-color: #fff; display: none; border: 1px solid #555; padding: 25px; top: 20%; left: 30%;">
+    <form action="/albums/<%= user.uid%>" method="post">
+        <label for="albumname">Album Name</label>
+        <input type="text" id="albumname" name="albumname">
+        <button type="submit">Create Album</button>
+    </form>
+</div>
+
+<div>
+    <h1>Albums of <%= user.fname + " " + user.lname%>
+    </h1>
+    <a href="/">Homepage</a>
+
+    <div>
+
+        <div style="display: flex; flex-direction: row;">
+            <h3>Albums</h3>
+            <button onclick="toggleMenu()">Create Album</button>
+        </div>
+
+        <div id="album-list">
+            <% albums.forEach(function(row) { %>
+                <div style="display: flex; flex-direction: row;">
+                    <a href="/albums/<%= user.uid%>/<%= row.aid%>">
+                        <%= row.albumname %>
+                    </a>
+                </div>
+                <% }); %>
+        </div>
+    </div>
+</div>

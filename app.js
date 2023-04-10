@@ -116,6 +116,22 @@ app.get('/profile/:uid', checkAuthenticated, async (req, res) => {
     res.render('profile.ejs', {user : fetchedUser, friends : fetchedFriends})
 })
 
+app.get('/albums/:uid', checkAuthenticated, async (req, res) => {
+    const fetchedUser = await database.FetchUserByUID(req.params.uid);
+    const fetchedAlbums = await database.FetchAlbumsOfUserByUID(req.params.uid);
+    res.render('albums.ejs', {user : fetchedUser, albums: fetchedAlbums})
+})
+
+app.post('/albums/:uid', checkAuthenticated, async (req, res) => {
+    await database.CreateAlbum(req.user.uid, req.body.albumname);
+    res.redirect(`/albums/${req.params.uid}`)
+})
+
+app.get('/albums/:uid/:aid', checkAuthenticated, async (req, res) => {
+    const fetchedPhotos = await database.FetchAlbumsOfUserByUID(req.params.uid);
+    res.render('album.ejs')
+})
+
 
 
 

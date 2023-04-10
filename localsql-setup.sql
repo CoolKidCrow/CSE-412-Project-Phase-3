@@ -1,5 +1,6 @@
 DROP TABLE Users;
 DROP TABLE Friends;
+DROP TABLE Albums;
 
 CREATE TABLE Users (
     UID serial,
@@ -20,4 +21,13 @@ CREATE TABLE Friends (
 	date timestamp default current_timestamp,
 	
 	PRIMARY KEY (UID, FID)
+);
+
+CREATE TABLE Albums (
+	AID serial,
+	UID serial NOT NULL REFERENCES Users(UID),
+	date timestamp default current_timestamp,
+	albumName varchar(255) NOT NULL,
+	
+	PRIMARY KEY (AID)
 );

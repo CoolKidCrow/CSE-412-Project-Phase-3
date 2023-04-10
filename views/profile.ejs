@@ -10,6 +10,8 @@
         <label>Hometown: <%= user.fname%></label>
     </div>
 
+    <a href="/albums/<%= user.uid %>">Albums</a>
+
     <div id="friend-list">
         <h3>Friends List</h3>
         <% friends.forEach(function(row) { %>

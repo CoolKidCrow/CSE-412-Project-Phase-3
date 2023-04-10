@@ -89,4 +89,44 @@ async function FetchFriendsOfUserByUID(uid)
     }
 }
 
-module.exports = { CreateUser, FetchUserByEmail, FetchUserByUID, CreateFriendship, FetchUserByName, UpdateAccountInfo, FetchFriendsOfUserByUID}
+async function CreateAlbum(uid, name)
+{
+    try {
+        const query = 'INSERT INTO Albums (uid, albumName) VALUES ($1, $2)';
+        await client.query(query, [uid, name]);
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+async function FetchAlbumsOfUserByUID(uid)
+{
+    try{
+        const query = "SELECT aid, albumName FROM Albums WHERE uid = $1";
+        const result = await client.query(query, [uid]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function FetchPhotosOfAlbumByAID(aid)
+{
+    try{
+        const query = "";
+        const result = await client.query(query, [aid]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+module.exports = { CreateUser, 
+    FetchUserByEmail, 
+    FetchUserByUID, 
+    CreateFriendship, 
+    FetchUserByName, 
+    UpdateAccountInfo, 
+    FetchFriendsOfUserByUID, 
+    CreateAlbum, 
+    FetchAlbumsOfUserByUID }
