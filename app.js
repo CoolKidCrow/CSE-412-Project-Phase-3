@@ -110,14 +110,10 @@ app.post('/account', checkAuthenticated, async (req, res) => {
     res.redirect('/account')
 })
 
-app.get('/friendlist/:uid', checkAuthenticated, async (req, res) => {
-    const result = await database.FetchFriendsOfUserByUID(req.params.uid);
-    res.render('friendlist.ejs', {friends : result})
-})
-
 app.get('/profile/:uid', checkAuthenticated, async (req, res) => {
-    const result = await database.FetchUserByUID(req.params.uid);
-    res.render('profile.ejs', {user : result})
+    const fetchedUser = await database.FetchUserByUID(req.params.uid);
+    const fetchedFriends = await database.FetchFriendsOfUserByUID(req.params.uid);
+    res.render('profile.ejs', {user : fetchedUser, friends : fetchedFriends})
 })
 
 

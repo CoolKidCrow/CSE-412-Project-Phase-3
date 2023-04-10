@@ -2,12 +2,20 @@
     <h1>Profile of <%= user.fname + " " + user.lname%>
     </h1>
     <a href="/">Homepage</a>
-    <a href="/friendlist/<%= user.uid %>">Friends List</a>
     <div style="display: flex; flex-direction: column;">
         <label>First Name: <%= user.fname%></label>
         <label>Last Name: <%= user.fname%></label>
         <label>Gender: <%= user.fname%></label>
         <label>Date Of Birth: <%= user.fname%></label>
         <label>Hometown: <%= user.fname%></label>
+    </div>
+
+    <div id="friend-list">
+        <h3>Friends List</h3>
+        <% friends.forEach(function(row) { %>
+            <div style="display: flex; flex-direction: row;">
+                <a href="/profile/<%= row.fid %>"><%= row.fname + " " + row.lname %></a>
+            </div>
+            <% }); %>
     </div>
 </div>
