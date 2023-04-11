@@ -139,7 +139,12 @@ app.post('/albums/:uid/:aid', checkAuthenticated, async (req, res) => {
     res.redirect(`/albums/${req.params.uid}/${req.params.aid}`)
 })
 
-app.get('/albums/:uid/:aid/:pid', checkAuthenticated, async (req, res) => {
+app.post('/albums/:uid/:aid/delete', checkAuthenticated, async (req, res) => {
+    await database.DeleteAlbumByAID(req.params.aid)
+    res.redirect(`/albums/${req.params.uid}`)
+})
+
+app.get('/photo/:pid', checkAuthenticated, async (req, res) => {
     const fetchPhoto = await database.FetchPhotoByPID(req.params.pid);
     res.render('photo.ejs', {photo : fetchPhoto})
 })

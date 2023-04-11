@@ -17,7 +17,14 @@
 
 <div style="display: flex; flex-direction: row;">
     <% if (uid==localuid) { %>
-        <button onclick="toggleMenu()">Upload Photo</button>
+        <div>
+            <button onclick="toggleMenu()">Upload Photo</button>
+        </div>
+        <div>
+            <form action="/albums/<%= uid %>/<%= album.aid %>/delete" method="post">
+                <button type="submit">Delete Album</button>
+            </form>
+        </div>
         <% } %>
 </div>
 
@@ -38,7 +45,7 @@
     <% photos.forEach(function(photo) { %>
         <div style="display: flex; flex-direction: row; padding: 25px;">
             <div style="width: 300px; height: 300px;">
-                <a href="/albums/<%= uid %>/<%= photo.aid %>/<%= photo.pid %>">
+                <a href="/photo/<%= photo.pid %>">
                     <img src="<%= photo.photourl %>" width="100%">
                 </a>
                 <span>

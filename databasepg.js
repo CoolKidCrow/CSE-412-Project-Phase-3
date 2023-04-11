@@ -136,7 +136,7 @@ async function FetchPhotoByPID(pid)
     try{
         const query = "SELECT * FROM Photos WHERE pid = $1";
         const result = await client.query(query, [pid]);
-        return result.rows;
+        return result.rows[0];
     } catch (err){
         console.log(err.stack);
     }
@@ -164,6 +164,26 @@ async function FetchAllPhotos()
     }
 }
 
+async function DeleteAlbumByAID(aid)
+{
+    try{
+        const query = "DELETE FROM albums WHERE aid = $1;";
+        await client.query(query, [aid]);
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function DeletePhotoByPID(pid)
+{
+    try{
+        const query = "DELETE FROM photos WHERE pid = $1;";
+        await client.query(query, [pid]);
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -177,4 +197,6 @@ module.exports = { CreateUser,
     CreatePhoto,
     FetchPhotoByPID,
     FetchAlbumByAid,
-    FetchAllPhotos }
+    FetchAllPhotos,
+    DeleteAlbumByAID,
+    DeletePhotoByPID }
