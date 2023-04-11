@@ -9,22 +9,8 @@
     }
 </script>
 
-<style>
-    .menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 1;
-        display: none;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        padding: 50px;
-        margin: 50px;
-        list-style: none;
-    }
-</style>
-
-<div id="menu" style="position: absolute; z-index: 1; background-color: #fff; display: none; border: 1px solid #555; padding: 25px; top: 20%; left: 30%;">
+<div id="menu"
+    style="position: absolute; z-index: 1; background-color: #fff; display: none; border: 1px solid #555; padding: 25px; top: 20%; left: 30%;">
     <form action="/albums/<%= user.uid%>" method="post">
         <label for="albumname">Album Name</label>
         <input type="text" id="albumname" name="albumname">
@@ -39,9 +25,11 @@
 
     <div>
 
-        <div style="display: flex; flex-direction: row;">
+        <div>
+            <% if (user.uid == localuid) { %>
+                <button onclick="toggleMenu()">Create Album</button>
+            <% } %>
             <h3>Albums</h3>
-            <button onclick="toggleMenu()">Create Album</button>
         </div>
 
         <div id="album-list">

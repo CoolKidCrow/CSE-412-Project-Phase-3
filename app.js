@@ -119,7 +119,7 @@ app.get('/profile/:uid', checkAuthenticated, async (req, res) => {
 app.get('/albums/:uid', checkAuthenticated, async (req, res) => {
     const fetchedUser = await database.FetchUserByUID(req.params.uid);
     const fetchedAlbums = await database.FetchAlbumsOfUserByUID(req.params.uid);
-    res.render('albums.ejs', {user : fetchedUser, albums: fetchedAlbums})
+    res.render('albums.ejs', {user : fetchedUser, albums: fetchedAlbums, localuid : req.user.uid})
 })
 
 app.post('/albums/:uid', checkAuthenticated, async (req, res) => {
@@ -128,8 +128,19 @@ app.post('/albums/:uid', checkAuthenticated, async (req, res) => {
 })
 
 app.get('/albums/:uid/:aid', checkAuthenticated, async (req, res) => {
-    const fetchedPhotos = await database.FetchAlbumsOfUserByUID(req.params.uid);
-    res.render('album.ejs')
+    const fetchedPhotos = await database.FetchPhotosByAID(req.params.aid);
+    const fetchalbum = await database.FetchAlbumByAid(req.params.aid);
+    res.render('album.ejs', {album : fetchalbum, uid : req.params.uid, photos : fetchedPhotos, localuid : req.user.uid})
+})
+
+app.post('/albums/:uid/:aid', checkAuthenticated, async (req, res) => {
+    await database.CreatePhoto(req.params.aid, req.body.caption, req.body.photourl)
+    res.redirect(`/albums/${req.params.uid}/${req.params.aid}`)
+})
+
+app.get('/albums/:uid/:aid/:pid', checkAuthenticated, async (req, res) => {
+    const fetchPhoto = await database.FetchPhotoByPID(req.params.pid);
+    res.render('photo.ejs', {photo : fetchPhoto})
 })
 
 

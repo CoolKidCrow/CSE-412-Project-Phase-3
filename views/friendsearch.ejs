@@ -16,7 +16,7 @@
             <div style="display: flex; flex-direction: row;">
                 <form method="POST" action="/addfriend">
                     <input type="hidden" name="fid" value="<%= row.uid %>">
-                    <label><%= row.fname + " " + row.lname %></label>
+                    <a href="/profile/<%=row.uid%>"><%= row.fname + " " + row.lname %></a>
                     <button type="submit">Add Friend</button>
                 </form>
             </div>

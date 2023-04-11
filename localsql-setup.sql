@@ -1,6 +1,7 @@
 DROP TABLE Users;
 DROP TABLE Friends;
 DROP TABLE Albums;
+DROP TABLE Photos;
 
 CREATE TABLE Users (
     UID serial,
@@ -30,4 +31,11 @@ CREATE TABLE Albums (
 	albumName varchar(255) NOT NULL,
 	
 	PRIMARY KEY (AID)
+);
+
+CREATE TABLE Photos (
+	PID serial,
+	AID serial NOT NULL REFERENCES Albums(AID),
+	caption varchar(255),
+	photoUrl varchar(2000)
 );

@@ -1,0 +1,50 @@
+<h1>
+    <%= album.albumname %>
+</h1>
+
+<a href="/albums/<%= uid %>">Back</a>
+
+<script>
+    function toggleMenu() {
+        var menu = document.getElementById("menu");
+        if (menu.style.display === "none") {
+            menu.style.display = "block";
+        } else {
+            menu.style.display = "none";
+        }
+    }
+</script>
+
+<div style="display: flex; flex-direction: row;">
+    <% if (uid==localuid) { %>
+        <button onclick="toggleMenu()">Upload Photo</button>
+        <% } %>
+</div>
+
+<div id="menu"
+    style="position: absolute; z-index: 1; background-color: #fff; display: none; border: 1px solid #555; padding: 25px; top: 20%; left: 30%;">
+    <form action="/albums/<%= uid %>/<%= album.aid %>" method="post">
+        <div style="display: flex; flex-direction: column;">
+            <label for="photourl">Photo Url: </label>
+            <input type="text" id="photourl" name="photourl">
+            <label for="caption">Caption: </label>
+            <input type="text" id="caption" name="caption">
+            <button type="submit">Upload Photo</button>
+        </div>
+    </form>
+</div>
+
+<div id="photo-list">
+    <% photos.forEach(function(photo) { %>
+        <div style="display: flex; flex-direction: row;">
+            <div style="width: 300px; height: 300px;">
+                <a href="/albums/<%= uid %>/<%= photo.aid %>/<%= photo.pid %>">
+                    <img src="<%= photo.photourl %>" width="90%">
+                </a>
+                <span>
+                    <%= photo.caption %>
+                </span>
+            </div>
+        </div>
+        <% }); %>
+</div>

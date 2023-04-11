@@ -110,12 +110,44 @@ async function FetchAlbumsOfUserByUID(uid)
     }
 }
 
-async function FetchPhotosOfAlbumByAID(aid)
+async function FetchPhotosByAID(aid)
 {
     try{
-        const query = "";
+        const query = "SELECT * FROM Photos WHERE aid = $1";
         const result = await client.query(query, [aid]);
         return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function CreatePhoto(aid, caption, photourl)
+{
+    try{
+        const query = "INSERT INTO Photos (AID, caption, photoUrl) VALUES ($1, $2, $3)";
+        const result = await client.query(query, [aid, caption, photourl]);
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function FetchPhotoByPID(pid)
+{
+    try{
+        const query = "SELECT * FROM Photos WHERE pid = $1";
+        const result = await client.query(query, [pid]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function FetchAlbumByAid(aid)
+{
+    try{
+        const query = "SELECT * FROM albums WHERE aid = $1";
+        const result = await client.query(query, [aid]);
+        return result.rows[0];
     } catch (err){
         console.log(err.stack);
     }
@@ -129,4 +161,8 @@ module.exports = { CreateUser,
     UpdateAccountInfo, 
     FetchFriendsOfUserByUID, 
     CreateAlbum, 
-    FetchAlbumsOfUserByUID }
+    FetchAlbumsOfUserByUID,
+    FetchPhotosByAID,
+    CreatePhoto,
+    FetchPhotoByPID,
+    FetchAlbumByAid }
