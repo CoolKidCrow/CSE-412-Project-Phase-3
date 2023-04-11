@@ -27,8 +27,9 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.fname + " " + req.user.lname, uid: req.user.uid})
+app.get('/', checkAuthenticated, async (req, res) => {
+    const fetchAllPhotos = await database.FetchAllPhotos();
+    res.render('index.ejs', { name: req.user.fname + " " + req.user.lname, uid: req.user.uid, photos : fetchAllPhotos})
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {

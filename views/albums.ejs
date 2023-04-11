@@ -19,17 +19,16 @@
 </div>
 
 <div>
-    <h1>Albums of <%= user.fname + " " + user.lname%>
-    </h1>
     <a href="/">Homepage</a>
 
     <div>
 
         <div>
-            <% if (user.uid == localuid) { %>
+            <h3>Albums of <%= user.fname + " " + user.lname%>
+            </h3>
+            <% if (user.uid==localuid) { %>
                 <button onclick="toggleMenu()">Create Album</button>
-            <% } %>
-            <h3>Albums</h3>
+                <% } %>
         </div>
 
         <div id="album-list">

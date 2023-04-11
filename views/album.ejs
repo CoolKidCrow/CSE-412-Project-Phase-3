@@ -36,10 +36,10 @@
 
 <div id="photo-list">
     <% photos.forEach(function(photo) { %>
-        <div style="display: flex; flex-direction: row;">
+        <div style="display: flex; flex-direction: row; padding: 25px;">
             <div style="width: 300px; height: 300px;">
                 <a href="/albums/<%= uid %>/<%= photo.aid %>/<%= photo.pid %>">
-                    <img src="<%= photo.photourl %>" width="90%">
+                    <img src="<%= photo.photourl %>" width="100%">
                 </a>
                 <span>
                     <%= photo.caption %>

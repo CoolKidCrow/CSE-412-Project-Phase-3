@@ -25,14 +25,20 @@
     </div>
 
     <div id="photo-browse">
-        <div style="display: flex; flex-direction: column; padding: 5px;">
-            <a href="/">User</a>
-            <div style="width: 300px; height: 300px;">
-                <a href="/">
-                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.wallpapersafari.com%2F26%2F93%2FJaGns9.jpg&f=1&nofb=1&ipt=f97a78db5ca9a949b8dd05457e56093e02fbf0ffdec9390da0cbbf6a0d94ea89&ipo=images" width="100%">
+        <% photos.forEach(function(photo) { %>
+            <div
+                style="display: flex; flex-direction: column; padding: 5px; border: 2px solid; width: 300px; height: 300px;">
+                <a href="/profile/<%= photo.uid%>">
+                    <%= photo.fname + " " + photo.lname%>
                 </a>
+                <a href="/photo/<%= photo.pid%>">
+                    <img src="<%= photo.photourl%>" style="max-width: 80%; height: auto;">
+                </a>
+                <span>
+                    <%= photo.caption%>
+                </span>
             </div>
-        </div>
+            <% }); %>
     </div>
 
 
