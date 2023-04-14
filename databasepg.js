@@ -156,7 +156,7 @@ async function FetchAlbumByAid(aid)
 async function FetchAllPhotos()
 {
     try{
-        const query = "SELECT * FROM photos INNER JOIN albums ON albums.aid = photos.aid INNER JOIN users ON albums.uid = users.uid ORDER BY photos.date DESC";
+        const query = "SELECT photourl, fname, lname, users.uid, pid, caption FROM photos INNER JOIN albums ON albums.aid = photos.aid INNER JOIN users ON albums.uid = users.uid ORDER BY photos.date DESC";
         const result = await client.query(query);
         return result.rows;
     } catch (err){
@@ -184,6 +184,27 @@ async function DeletePhotoByPID(pid)
     }
 }
 
+async function CreateComment(pid, uid, text)
+{
+    try{
+        const query = "INSERT INTO Comments (PID, UID, text) VALUES ($1, $2, $3)";
+        const result = await client.query(query, [pid, uid, text]);
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function FetchCommentsByPID(pid)
+{
+    try{
+        const query = "SELECT fname, lname, text FROM Comments INNER JOIN Users on Comments.UID = Users.UID WHERE pid = $1";
+        const result = await client.query(query, [pid]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -199,4 +220,6 @@ module.exports = { CreateUser,
     FetchAlbumByAid,
     FetchAllPhotos,
     DeleteAlbumByAID,
-    DeletePhotoByPID }
+    DeletePhotoByPID,
+    CreateComment,
+    FetchCommentsByPID }

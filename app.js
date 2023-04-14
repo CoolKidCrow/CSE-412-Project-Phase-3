@@ -145,11 +145,16 @@ app.post('/albums/:uid/:aid/delete', checkAuthenticated, async (req, res) => {
 })
 
 app.get('/photo/:pid', checkAuthenticated, async (req, res) => {
-    const fetchPhoto = await database.FetchPhotoByPID(req.params.pid);
-    res.render('photo.ejs', {photo : fetchPhoto})
+    const fetchPhoto = await database.FetchPhotoByPID(req.params.pid)
+    const fetchComments = await database.FetchCommentsByPID(req.params.pid)
+    console.log(fetchComments)
+    res.render('photo.ejs', {photo : fetchPhoto, uid : req.user.uid, comments : fetchComments})
 })
 
-
+app.post('/comment', checkAuthenticated, async (req, res) => {
+    await database.CreateComment(req.body.pid, req.body.uid, req.body.comment)
+    res.redirect(`/photo/${req.body.pid}`)
+})
 
 
 

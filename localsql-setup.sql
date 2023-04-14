@@ -2,6 +2,7 @@ DROP TABLE Users;
 DROP TABLE Friends;
 DROP TABLE Albums;
 DROP TABLE Photos;
+DROP TABLE Likes;
 
 CREATE TABLE Users (
     UID serial,
@@ -42,3 +43,29 @@ CREATE TABLE Photos (
 	
 	PRIMARY KEY (PID)
 );
+
+CREATE TABLE Comments (
+	CID serial,
+	PID serial NOT NULL REFERENCES Photos(PID) ON DELETE CASCADE,
+	UID serial NOT NULL REFERENCES Users(UID) ON DELETE CASCADE,
+	text varchar(500),
+	date timestamp default current_timestamp,
+	
+	PRIMARY KEY (CID)
+);
+
+CREATE TABLE Likes (
+	UID serial NOT NULL REFERENCES Users(UID) ON DELETE CASCADE,
+	PID serial NOT NULL REFERENCES Photos(PID) ON DELETE CASCADE,
+	
+	PRIMARY KEY (UID, PID)
+);
+
+CREATE TABLE Tags (
+	TID serial,
+	text varchar(255),
+	PID serial NOT NULL REFERENCES Photos(PID) ON DELETE CASCADE,
+	
+	PRIMARY KEY (TID)
+);
+

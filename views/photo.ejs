@@ -2,5 +2,21 @@
 
 <div style="display: flex; flex-direction: column;">
     <img src="<%= photo.photourl %>" style="max-width: 200px;">
-    <span><%= photo.caption %></span>
+    <span>Caption: <%= photo.caption %></span>
+</div>
+
+<form action="/comment" method="post">
+    <input type="hidden" name="pid" value="<%= photo.pid %>">
+    <input type="hidden" name="uid" value="<%= uid %>">
+    <label for="comment">Comment: </label>
+    <input type="text" id="comment" name="comment" required>
+    <button type="submit">Comment</button>
+</form>
+
+<div id="comments">
+    <% comments.forEach(function(comment) { %>
+        <div>
+            <span><%=comment.fname + " " + comment.lname + ": " + comment.text%></span>
+        </div>
+        <% }); %>
 </div>
