@@ -147,7 +147,13 @@ app.post('/albums/:uid/:aid/delete', checkAuthenticated, async (req, res) => {
 app.get('/photo/:pid', checkAuthenticated, async (req, res) => {
     const fetchPhoto = await database.FetchPhotoByPID(req.params.pid)
     const fetchComments = await database.FetchCommentsByPID(req.params.pid)
-    res.render('photo.ejs', {photo : fetchPhoto, uid : req.user.uid, comments : fetchComments})
+    const fetchTags = await database.FetchTagsByPID(req.params.pid);
+    res.render('photo.ejs', {photo : fetchPhoto, uid : req.user.uid, comments : fetchComments, tags : fetchTags})
+})
+
+app.post('/photo/:pid/addtag', checkAuthenticated, async (req, res) => {
+    await database.CreateTag(req.body.tag, req.params.pid);
+    res.redirect(`/photo/${req.params.pid}`)
 })
 
 app.post('/photo/:pid/delete', checkAuthenticated, async (req, res) => {
@@ -160,7 +166,15 @@ app.post('/comment', checkAuthenticated, async (req, res) => {
     res.redirect(`/photo/${req.body.pid}`)
 })
 
+app.get('/tag/:text', checkAuthenticated, async (req, res) => {
+    const fetchPhotos = await database.FetchPhotosByTagText(req.params.text);
+    res.render('tag.ejs', {photos : fetchPhotos, tag : req.params.text, localuser : req.user.uid})
+})
 
+app.get('/tag/:text/:uid', checkAuthenticated, async (req, res) => {
+    const fetchPhotos = await database.FetchPhotosByTagTextAndUID(req.params.text, req.params.uid);
+    res.render('tag.ejs', {photos : fetchPhotos, tag : req.params.text, localuser : req.user.uid})
+})
 
 
 

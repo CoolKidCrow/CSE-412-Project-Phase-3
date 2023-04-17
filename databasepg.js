@@ -205,6 +205,49 @@ async function FetchCommentsByPID(pid)
     }
 }
 
+async function FetchTagsByPID(pid)
+{
+    try{
+        const query = "SELECT * FROM Tags WHERE pid = $1";
+        const result = await client.query(query, [pid]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function CreateTag(text, pid)
+{
+    try{
+        const query = "INSERT INTO Tags (text, pid) VALUES ($1, $2)";
+        const result = await client.query(query, [text, pid]);
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function FetchPhotosByTagText(text)
+{
+    try{
+        const query = "SELECT fname, lname, albums.uid, photourl, caption, photos.pid FROM Tags INNER JOIN Photos ON Tags.pid = Photos.pid INNER JOIN Albums ON photos.aid = albums.aid INNER JOIN Users ON users.uid = albums.uid WHERE text = $1";
+        const result = await client.query(query, [text]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function FetchPhotosByTagTextAndUID(text, uid)
+{
+    try{
+        const query = "SELECT fname, lname, albums.uid, photourl, caption, photos.pid FROM Tags INNER JOIN Photos ON Tags.pid = Photos.pid INNER JOIN Albums ON photos.aid = albums.aid INNER JOIN Users ON users.uid = albums.uid WHERE text = $1 AND users.uid = $2";
+        const result = await client.query(query, [text, uid]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -222,4 +265,8 @@ module.exports = { CreateUser,
     DeleteAlbumByAID,
     DeletePhotoByPID,
     CreateComment,
-    FetchCommentsByPID }
+    FetchCommentsByPID,
+    FetchTagsByPID,
+    CreateTag,
+    FetchPhotosByTagText,
+    FetchPhotosByTagTextAndUID }

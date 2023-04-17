@@ -15,6 +15,19 @@
     <span>Caption: <%= photo.caption %></span>
 </div>
 
+<div id="tags">
+    <span>Tags: </span>
+    <% tags.forEach(function(tag) { %>
+        <a href="/tag/<%=tag.text%>"><%=tag.text%></a>
+    <% }); %>
+    <%if(uid == photo.uid) {%>
+        <form action="/photo/<%=photo.pid%>/addtag" method="post">
+            <input type="text" id="tag" name="tag" onkeyup="this.value=this.value.toLowerCase().replace(/ /g,'');">
+            <button type="submit">Add Tag</button>
+        </form>
+    <%}%>
+</div>
+
 <form action="/comment" method="post">
     <input type="hidden" name="pid" value="<%= photo.pid %>">
     <input type="hidden" name="uid" value="<%= uid %>">

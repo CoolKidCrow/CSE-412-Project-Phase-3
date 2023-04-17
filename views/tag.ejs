@@ -1,0 +1,29 @@
+<a href="/">Homepage</a>
+
+<div>
+    <h1>Tag: <%=tag%></h1>
+</div>
+<div style="display: flex; flex-direction: row;">
+    <form action="/tag/<%=tag%>/<%=localuser%>" method="get">
+        <button type="submit">View my photos</button>
+    </form>
+    <form action="/tag/<%=tag%>" method="get">
+        <button type="submit">View all photos</button>
+    </form>
+</div>
+<div id="photo-browse">
+    <% photos.forEach(function(photo) { %>
+        <div
+            style="display: flex; flex-direction: column; padding: 5px; border: 2px solid; width: 300px; height: 300px;">
+            <a href="/profile/<%= photo.uid%>">
+                <%= photo.fname + " " + photo.lname%>
+            </a>
+            <a href="/photo/<%= photo.pid%>">
+                <img src="<%= photo.photourl%>" style="max-width: 80%; height: auto;">
+            </a>
+            <span>
+                <%= photo.caption%>
+            </span>
+        </div>
+        <% }); %>
+</div>
