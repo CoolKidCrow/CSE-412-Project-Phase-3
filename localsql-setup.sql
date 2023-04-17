@@ -3,6 +3,7 @@ DROP TABLE Friends;
 DROP TABLE Albums;
 DROP TABLE Photos;
 DROP TABLE Likes;
+DROP TABLE Tags
 
 CREATE TABLE Users (
     UID serial,
@@ -68,4 +69,6 @@ CREATE TABLE Tags (
 	
 	PRIMARY KEY (TID)
 );
+
+CREATE UNIQUE INDEX tags_pid_text ON Tags (text, PID) WHERE text IS NOT NULL;
 
