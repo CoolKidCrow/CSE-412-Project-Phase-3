@@ -85,7 +85,7 @@ app.get('/friendsearch', checkAuthenticated, (req, res) => {
 })
 
 app.post('/friendsearch', checkAuthenticated, async (req,res) => {
-    const result = await database.FetchUserByName(req.body.name);
+    const result = await database.FetchUserByName(req.body.name, req.user.uid);
     req.flash('users', result);
     res.redirect('/friendsearch');
 })
@@ -147,8 +147,12 @@ app.post('/albums/:uid/:aid/delete', checkAuthenticated, async (req, res) => {
 app.get('/photo/:pid', checkAuthenticated, async (req, res) => {
     const fetchPhoto = await database.FetchPhotoByPID(req.params.pid)
     const fetchComments = await database.FetchCommentsByPID(req.params.pid)
-    console.log(fetchComments)
     res.render('photo.ejs', {photo : fetchPhoto, uid : req.user.uid, comments : fetchComments})
+})
+
+app.post('/photo/:pid/delete', checkAuthenticated, async (req, res) => {
+    await database.DeletePhotoByPID(req.params.pid);
+    res.redirect('/')
 })
 
 app.post('/comment', checkAuthenticated, async (req, res) => {

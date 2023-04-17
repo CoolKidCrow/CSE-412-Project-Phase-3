@@ -57,11 +57,11 @@ async function CreateFriendship(uid, fid)
     }
 }
 
-async function FetchUserByName(name)
+async function FetchUserByName(name, uid)
 {
     try{
-        const query = "SELECT * FROM Users WHERE fname LIKE $1";
-        let user = await client.query(query, [`${name}%`]);
+        const query = "SELECT * FROM Users WHERE fname LIKE $1 AND uid != $2 ";
+        let user = await client.query(query, [`${name}%`, uid]);
         return user.rows;
     } catch (err){
         console.log(err.stack);
@@ -134,7 +134,7 @@ async function CreatePhoto(aid, caption, photourl)
 async function FetchPhotoByPID(pid)
 {
     try{
-        const query = "SELECT * FROM Photos WHERE pid = $1";
+        const query = "SELECT * FROM Photos INNER JOIN Albums ON Photos.aid = Albums.aid INNER JOIN Users on Albums.uid = Users.uid WHERE pid = $1";
         const result = await client.query(query, [pid]);
         return result.rows[0];
     } catch (err){
@@ -197,7 +197,7 @@ async function CreateComment(pid, uid, text)
 async function FetchCommentsByPID(pid)
 {
     try{
-        const query = "SELECT fname, lname, text FROM Comments INNER JOIN Users on Comments.UID = Users.UID WHERE pid = $1";
+        const query = "SELECT date, fname, lname, text FROM Comments INNER JOIN Users on Comments.UID = Users.UID WHERE pid = $1";
         const result = await client.query(query, [pid]);
         return result.rows;
     } catch (err){
