@@ -15,6 +15,8 @@
     <span>Caption: <%= photo.caption %></span>
 </div>
 
+<br>
+
 <div id="tags">
     <span>Tags: </span>
     <% tags.forEach(function(tag) { %>
@@ -27,6 +29,27 @@
         </form>
     <%}%>
 </div>
+
+<br>
+
+<div id="likes">
+    <form action="/photo/<%=photo.pid%>/like" method="post">
+        <button type="submit">Like</button>
+    </form>
+    <span>Like Count: <%=likes.length%></span>
+    <div>
+        <div>
+            <span>Liked By:</span>
+        </div>
+        <% likes.forEach(function(like) { %>
+            <div>
+                <a href="<%=like.uid%></a>"><%=like.fname + " " + like.lname%></a>
+            </div>
+            <% }); %>
+    </div>
+</div>
+
+<br>
 
 <form action="/comment" method="post">
     <input type="hidden" name="pid" value="<%= photo.pid %>">

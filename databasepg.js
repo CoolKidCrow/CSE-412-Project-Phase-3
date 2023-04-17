@@ -248,6 +248,27 @@ async function FetchPhotosByTagTextAndUID(text, uid)
     }
 }
 
+async function FetchLikesByPID(pid)
+{
+    try{
+        const query = "SELECT fname, lname, users.uid FROM Likes INNER JOIN users ON likes.uid = users.uid WHERE pid = $1";
+        const result = await client.query(query, [pid]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function CreateLike(uid, pid)
+{
+    try{
+        const query = "INSERT INTO Likes (uid, pid) VALUES ($1, $2)";
+        const result = await client.query(query, [uid, pid]);
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -269,4 +290,6 @@ module.exports = { CreateUser,
     FetchTagsByPID,
     CreateTag,
     FetchPhotosByTagText,
-    FetchPhotosByTagTextAndUID }
+    FetchPhotosByTagTextAndUID,
+    FetchLikesByPID,
+    CreateLike }

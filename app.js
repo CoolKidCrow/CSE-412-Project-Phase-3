@@ -148,7 +148,8 @@ app.get('/photo/:pid', checkAuthenticated, async (req, res) => {
     const fetchPhoto = await database.FetchPhotoByPID(req.params.pid)
     const fetchComments = await database.FetchCommentsByPID(req.params.pid)
     const fetchTags = await database.FetchTagsByPID(req.params.pid);
-    res.render('photo.ejs', {photo : fetchPhoto, uid : req.user.uid, comments : fetchComments, tags : fetchTags})
+    const fetchLikes = await database.FetchLikesByPID(req.params.pid);
+    res.render('photo.ejs', {photo : fetchPhoto, uid : req.user.uid, comments : fetchComments, tags : fetchTags, likes : fetchLikes})
 })
 
 app.post('/photo/:pid/addtag', checkAuthenticated, async (req, res) => {
@@ -159,6 +160,11 @@ app.post('/photo/:pid/addtag', checkAuthenticated, async (req, res) => {
 app.post('/photo/:pid/delete', checkAuthenticated, async (req, res) => {
     await database.DeletePhotoByPID(req.params.pid);
     res.redirect('/')
+})
+
+app.post('/photo/:pid/like', checkAuthenticated, async (req, res) => {
+    await database.CreateLike(req.user.uid, req.params.pid);
+    res.redirect(`/photo/${req.params.pid}`)
 })
 
 app.post('/comment', checkAuthenticated, async (req, res) => {
