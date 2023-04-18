@@ -1,0 +1,10 @@
+<a href="/">Homepage</a>
+
+<h1>Top Contributers</h1>
+
+<div>
+    <% for(var i = 0; i < Math.min(10, contributers.length); i++) { %>
+        <a href="/profile/<%=contributers[i].uid%>"><%= i + 1 %>. <%=contributers[i].fname + " " + contributers[i].lname%></a>
+        <br>
+        <% } %>
+</div>

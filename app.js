@@ -187,7 +187,10 @@ app.get('/populartags', checkAuthenticated, async (req, res) => {
     res.render('populartags.ejs', {tags : fetchTags})
 })
 
-
+app.get('/topcontributers', checkAuthenticated, async (req, res) => {
+    const fetchContributers = await database.FetchTopContributers();
+    res.render('topcontributers.ejs', {contributers : fetchContributers})
+})
 
 
 

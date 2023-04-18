@@ -280,6 +280,26 @@ async function FetchPopularTags()
     }
 }
 
+async function FetchTopContributers()
+{
+    try{
+        var query = "SELECT COALESCE(pCount.uid, cCount.uid) as UID, COALESCE(pCount.count, 0) + COALESCE(cCount.count,0) as Contribution, COALESCE(pCount.fname, cCount.fname) as fname, COALESCE(pCount.lname, cCount.lname) as lname "
+        query += "FROM (SELECT a.uid, COUNT(a.uid), u.fname, u.lname FROM Albums a "
+        query += "JOIN Photos p ON a.aid = p.aid "
+        query += "INNER JOIN Users u ON u.uid = a.uid "
+        query += "GROUP BY a.uid, u.fname, u.lname) as pCount "
+        query += "FULL JOIN (SELECT c.uid, COUNT(c.uid), u.fname, u.lname "
+        query += "FROM Comments c "
+        query += "INNER JOIN Users u ON u.uid = c.uid "
+        query += "GROUP BY c.uid, u.fname, u.lname) as cCount ON pCount.uid = cCount.uid "
+        query += "ORDER BY Contribution DESC"
+        const result = await client.query(query);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -304,4 +324,5 @@ module.exports = { CreateUser,
     FetchPhotosByTagTextAndUID,
     FetchLikesByPID,
     CreateLike,
-    FetchPopularTags }
+    FetchPopularTags,
+    FetchTopContributers }
