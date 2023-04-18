@@ -1,0 +1,12 @@
+<a href="/">Homepage</a>
+
+<br>
+<br>
+<h1>Popular Tags</h1>
+
+<div>
+    <% for(var i = 0; i < tags.length; i++) { %>
+        <a href="/tag/<%=tags[i].text%>"><%= i + 1 %>. <%=tags[i].text%></a>
+        <br>
+        <% } %>
+</div>

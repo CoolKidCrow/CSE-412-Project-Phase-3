@@ -182,6 +182,11 @@ app.get('/tag/:text/:uid', checkAuthenticated, async (req, res) => {
     res.render('tag.ejs', {photos : fetchPhotos, tag : req.params.text, localuser : req.user.uid})
 })
 
+app.get('/populartags', checkAuthenticated, async (req, res) => {
+    const fetchTags = await database.FetchPopularTags();
+    res.render('populartags.ejs', {tags : fetchTags})
+})
+
 
 
 

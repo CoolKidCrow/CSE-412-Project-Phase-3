@@ -269,6 +269,17 @@ async function CreateLike(uid, pid)
     }
 }
 
+async function FetchPopularTags()
+{
+    try{
+        const query = "SELECT t.text, COUNT(*) as tag_count FROM Tags t JOIN photos p ON t.pid = p.pid GROUP BY t.text ORDER BY COUNT(*) DESC";
+        const result = await client.query(query);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -292,4 +303,5 @@ module.exports = { CreateUser,
     FetchPhotosByTagText,
     FetchPhotosByTagTextAndUID,
     FetchLikesByPID,
-    CreateLike }
+    CreateLike,
+    FetchPopularTags }
