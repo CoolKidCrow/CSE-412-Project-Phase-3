@@ -326,6 +326,30 @@ async function FetchPhotosByTags(tags)
     }
 }
 
+async function FetchPhotosByTagsAndUID(tags, uid)
+{
+    var inClause = "";
+    tags.forEach(tag => {
+        inClause += `'${tag}', `
+    });
+    inClause = inClause.trimEnd();
+    inClause = inClause.slice(0, inClause.length - 1)
+
+    try{
+        var query = "SELECT tags.pid, photos.pid, photos.caption, photos.photourl, users.uid, users.fname, users.lname FROM Tags "
+            query += "INNER JOIN Photos ON Tags.pid = photos.pid "
+            query += "INNER JOIN Albums ON Photos.aid = Albums.aid "
+            query += "INNER JOIN Users On Users.uid = Albums.uid "
+            query += `WHERE users.uid = ${uid} AND text IN (${inClause}) `
+            query += "GROUP BY tags.pid, photos.pid, photos.caption, photos.photourl, users.uid, users.fname, users.lname "
+            query += `HAVING COUNT(DISTINCT text) = ${tags.length}`
+        const result = await client.query(query);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -352,4 +376,5 @@ module.exports = { CreateUser,
     CreateLike,
     FetchPopularTags,
     FetchTopContributers,
-    FetchPhotosByTags }
+    FetchPhotosByTags,
+    FetchPhotosByTagsAndUID }

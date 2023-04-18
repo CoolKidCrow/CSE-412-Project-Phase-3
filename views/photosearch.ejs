@@ -2,7 +2,16 @@
 <h1>Photo Search</h1>
 
 <div>
-    <form action="/photosearch" method="post">
+    <div style="display: flex; flex-direction: row;">
+        <form action="/photosearch/user" method="get">
+            <button type="submit">View my photos</button>
+        </form>
+        <form action="/photosearch" method="get">
+            <button type="submit">View all photos</button>
+        </form>
+    </div>
+
+    <form action='/photosearch<%=url%>' method="post">
         <div>
             <label for="tags">Tags:</label>
             <input type="text" id="tags" name="tags" onkeyup="this.value=this.value.toLowerCase();">

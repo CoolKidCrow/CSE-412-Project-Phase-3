@@ -176,8 +176,8 @@ app.get('/tag/:text', checkAuthenticated, async (req, res) => {
     res.render('tag.ejs', {photos : fetchPhotos, tag : req.params.text, localuser : req.user.uid})
 })
 
-app.get('/tag/:text/:uid', checkAuthenticated, async (req, res) => {
-    const fetchPhotos = await database.FetchPhotosByTagTextAndUID(req.params.text, req.params.uid);
+app.get('/tag/:text/user', checkAuthenticated, async (req, res) => {
+    const fetchPhotos = await database.FetchPhotosByTagTextAndUID(req.params.text, req.user.uid);
     res.render('tag.ejs', {photos : fetchPhotos, tag : req.params.text, localuser : req.user.uid})
 })
 
@@ -192,15 +192,22 @@ app.get('/topcontributers', checkAuthenticated, async (req, res) => {
 })
 
 app.get('/photosearch', checkAuthenticated, async (req, res) => {
-    res.render('photosearch.ejs', { photos: [] })
+    res.render('photosearch.ejs', { photos: [], url: "" })
+})
+
+app.get('/photosearch/user', checkAuthenticated, async (req, res) => {
+    res.render('photosearch.ejs', { photos: [], url: "/user" })
 })
 
 app.post('/photosearch', checkAuthenticated, async (req, res) => {
     const result = await database.FetchPhotosByTags(req.body.tags.split(" "));
-    res.render('photosearch.ejs', { photos: result })
+    res.render('photosearch.ejs', { photos: result, url: "" })
 })
 
-
+app.post('/photosearch/user', checkAuthenticated, async (req, res) => {
+    const result = await database.FetchPhotosByTagsAndUID(req.body.tags.split(" "), req.user.uid);
+    res.render('photosearch.ejs', { photos: result, url: "/user" })
+})
 
 
 
