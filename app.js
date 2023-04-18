@@ -81,13 +81,12 @@ app.get('/logout', (req, res) => {
 
 
 app.get('/friendsearch', checkAuthenticated, (req, res) => {
-    res.render('friendsearch.ejs', { users: req.flash('users')})
+    res.render('friendsearch.ejs', { users: [] })
 })
 
 app.post('/friendsearch', checkAuthenticated, async (req,res) => {
     const result = await database.FetchUserByName(req.body.name, req.user.uid);
-    req.flash('users', result);
-    res.redirect('/friendsearch');
+    res.render('friendsearch.ejs', { users: result })
 })
 
 app.post('/addfriend', checkAuthenticated, async (req, res) => {
@@ -191,6 +190,19 @@ app.get('/topcontributers', checkAuthenticated, async (req, res) => {
     const fetchContributers = await database.FetchTopContributers();
     res.render('topcontributers.ejs', {contributers : fetchContributers})
 })
+
+app.get('/photosearch', checkAuthenticated, async (req, res) => {
+    res.render('photosearch.ejs', { photos: [] })
+})
+
+app.post('/photosearch', checkAuthenticated, async (req, res) => {
+    const result = await database.FetchPhotosByTags(req.body.tags.split(" "));
+    res.render('photosearch.ejs', { photos: result })
+})
+
+
+
+
 
 
 

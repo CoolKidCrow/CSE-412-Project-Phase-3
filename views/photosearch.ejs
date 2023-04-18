@@ -1,0 +1,30 @@
+<a href="/">Homepage</a>
+<h1>Photo Search</h1>
+
+<div>
+    <form action="/photosearch" method="post">
+        <div>
+            <label for="tags">Tags:</label>
+            <input type="text" id="tags" name="tags" onkeyup="this.value=this.value.toLowerCase();">
+        </div>
+
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div>
+    <% photos.forEach(function(photo) { %>
+        <div
+            style="display: flex; flex-direction: column; padding: 5px; border: 2px solid; width: 300px; height: 300px;">
+            <a href="/profile/<%= photo.uid%>">
+                <%= photo.fname + " " + photo.lname%>
+            </a>
+            <a href="/photo/<%= photo.pid%>">
+                <img src="<%= photo.photourl%>" style="max-width: 80%; height: auto;">
+            </a>
+            <span>
+                <%= photo.caption%>
+            </span>
+        </div>
+        <% }); %>
+</div>
