@@ -223,6 +223,11 @@ app.post('/searchcomment', checkAuthenticated, async (req, res) => {
     res.render('searchcomment.ejs', { users : result })
 })
 
+app.get('/youmayalsolike', checkAuthenticated, async (req, res) => {
+    const result = await database.FetchYouMayAlsoLikePhotos(req.user.uid);
+    res.render('youmayalsolike.ejs', { photos: result })
+})
+
 
 
 

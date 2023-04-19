@@ -385,6 +385,60 @@ async function FetchUserCommentsThatMatchText(text)
     }
 }
 
+async function FetchYouMayAlsoLikePhotos(uid)
+{
+    try{
+        const tags = await FetchTopFiveUserTags(uid)
+        
+        let tag1 = (tags.length >= 1) ? tags[0].text : ''
+        let tag2 = (tags.length >= 2) ? tags[1].text : ''
+        let tag3 = (tags.length >= 3) ? tags[2].text : ''
+        let tag4 = (tags.length >= 4) ? tags[3].text : ''
+        let tag5 = (tags.length >= 5) ? tags[4].text : ''
+
+        const query = `SELECT t.pid, u.fname, u.lname, u.uid, p.photourl, p.caption, p.pid, COUNT(CASE WHEN t.text='a' AND t.pid=p.pid THEN 1 ELSE NULL END) + ` +
+            `COUNT(CASE WHEN t.text='${tag2}' AND t.pid=p.pid THEN 1 ELSE NULL END) + ` +
+            `COUNT(CASE WHEN t.text='${tag3}' AND t.pid=p.pid THEN 1 ELSE NULL END) + ` +
+            `COUNT(CASE WHEN t.text='${tag4}' AND t.pid=p.pid THEN 1 ELSE NULL END) + ` +
+            `COUNT(CASE WHEN t.text='${tag5}' AND t.pid=p.pid THEN 1 ELSE NULL END) AS fulfilled_conditions ` +
+        "FROM Tags t " +
+        "JOIN Photos p on t.pid = p.pid " +
+        "INNER JOIN Albums a ON p.aid = a.aid " +
+        "INNER JOIN Users u ON a.uid = u.uid " +
+        `WHERE (t.text='${tag1}' AND t.pid=p.pid) ` +
+            `OR (t.text='${tag2}' AND t.pid=p.pid) ` +
+            `OR (t.text='${tag3}' AND t.pid=p.pid) ` +
+            `OR (t.text='${tag4}' AND t.pid=p.pid) ` +
+            `OR (t.text='${tag5}' AND t.pid=p.pid) ` +
+        "GROUP BY t.pid, u.fname, u.lname, u.uid, p.photourl, p.caption, p.pid " +
+        "ORDER BY p.date DESC"
+
+        const result = await client.query(query);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
+async function FetchTopFiveUserTags(uid)
+{
+    try{
+        const query = "SELECT tags.text, COUNT(*) AS tag_count " +
+        "FROM Tags " +
+        "INNER JOIN Photos ON Tags.pid = photos.pid " +
+        "INNER JOIN Albums ON photos.aid = albums.aid " +
+        "INNER JOIN Users on albums.uid = users.uid " +
+        "WHERE users.uid = $1 " +
+        "GROUP BY tags.text " +
+        "ORDER BY tag_count DESC " +
+        "LIMIT 5"
+        const result = await client.query(query, [uid]);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -414,4 +468,5 @@ module.exports = { CreateUser,
     FetchPhotosByTags,
     FetchPhotosByTagsAndUID,
     FetchRecommendedFriends,
-    FetchUserCommentsThatMatchText }
+    FetchUserCommentsThatMatchText,
+    FetchYouMayAlsoLikePhotos }

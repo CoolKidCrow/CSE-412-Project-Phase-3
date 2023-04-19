@@ -1,0 +1,19 @@
+<a href="/">Homepage</a>
+<h1>You-may-also-like</h1>
+
+<div id="photo-browse">
+    <% photos.forEach(function(photo) { %>
+        <div
+            style="display: flex; flex-direction: column; padding: 5px; border: 2px solid; width: 300px; height: 300px;">
+            <a href="/profile/<%= photo.uid%>">
+                <%= photo.fname + " " + photo.lname%>
+            </a>
+            <a href="/photo/<%= photo.pid%>">
+                <img src="<%= photo.photourl%>" style="max-width: 80%; height: auto;">
+            </a>
+            <span>
+                <%= photo.caption%>
+            </span>
+        </div>
+        <% }); %>
+</div>
