@@ -209,6 +209,11 @@ app.post('/photosearch/user', checkAuthenticated, async (req, res) => {
     res.render('photosearch.ejs', { photos: result, url: "/user" })
 })
 
+app.get('/recommendfriend', checkAuthenticated, async (req, res) => {
+    const result = await database.FetchRecommendedFriends(req.user.uid);
+    res.render('friendsearch.ejs', { users: result })
+})
+
 
 
 

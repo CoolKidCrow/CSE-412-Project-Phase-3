@@ -350,6 +350,25 @@ async function FetchPhotosByTagsAndUID(tags, uid)
     }
 }
 
+async function FetchRecommendedFriends(uid)
+{
+    try{
+        let query = "SELECT users.uid, users.fname, users.lname, count(f1.fid) " +
+        "FROM Friends f1 " +
+        "JOIN (SELECT fid " +
+        "FROM Friends " +
+        `WHERE uid = ${uid}) as f2 ON f1.uid = f2.fid ` +
+        "INNER JOIN Users " +
+        "ON f1.fid = Users.uid " +
+        "GROUP BY f1.fid, users.uid, users.fname, users.lname " +
+        "ORDER BY count(f1.fid) DESC"
+        const result = await client.query(query);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -377,4 +396,5 @@ module.exports = { CreateUser,
     FetchPopularTags,
     FetchTopContributers,
     FetchPhotosByTags,
-    FetchPhotosByTagsAndUID }
+    FetchPhotosByTagsAndUID,
+    FetchRecommendedFriends }
