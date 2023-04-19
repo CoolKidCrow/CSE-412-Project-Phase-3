@@ -1,0 +1,52 @@
+Date : 2023-04-19 04:25:24
+Directory : c:\Users\Crow\CSE-412-Project-Phase-3
+Total : 22 files,  4510 codes, 1 comments, 179 blanks, all 4690 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          2 |      3,350 |          0 |          2 |      3,352 |
+| JavaScript |          3 |        657 |          1 |         97 |        755 |
+| HTML       |         15 |        442 |          0 |         62 |        504 |
+| SQL        |          1 |         58 |          0 |         18 |         76 |
+| Markdown   |          1 |          3 |          0 |          0 |          3 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                            | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                               |         22 |      4,510 |          1 |        179 |      4,690 |
+| . (Files)                                                       |          7 |      4,068 |          1 |        117 |      4,186 |
+| views                                                           |         15 |        442 |          0 |         62 |        504 |
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                        | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\Crow\CSE-412-Project-Phase-3\README.md                 | Markdown   |          3 |          0 |          0 |          3 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\app.js                    | JavaScript |        202 |          1 |         51 |        254 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\databasepg.js             | JavaScript |        430 |          0 |         42 |        472 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\localsql-setup.sql        | SQL        |         58 |          0 |         18 |         76 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\package-lock.json         | JSON       |      3,315 |          0 |          1 |      3,316 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\package.json              | JSON       |         35 |          0 |          1 |         36 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\passport-config.js        | JavaScript |         25 |          0 |          4 |         29 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\account.ejs         | HTML       |         27 |          0 |          1 |         28 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\album.ejs           | HTML       |         52 |          0 |          5 |         57 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\albums.ejs          | HTML       |         39 |          0 |          5 |         44 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\friendsearch.ejs    | HTML       |         27 |          0 |          6 |         33 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\index.ejs           | HTML       |         41 |          0 |         16 |         57 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\login.ejs           | HTML       |         20 |          0 |          3 |         23 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\photo.ejs           | HTML       |         60 |          0 |          8 |         68 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\photosearch.ejs     | HTML       |         35 |          0 |          4 |         39 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\populartags.ejs     | HTML       |         10 |          0 |          2 |         12 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\profile.ejs         | HTML       |         21 |          0 |          2 |         23 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\register.ejs        | HTML       |         40 |          0 |          2 |         42 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\searchcomment.ejs   | HTML       |         16 |          0 |          4 |         20 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\tag.ejs             | HTML       |         28 |          0 |          1 |         29 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\topcontributers.ejs | HTML       |          8 |          0 |          2 |         10 |
+| c:\Users\Crow\CSE-412-Project-Phase-3\views\youmayalsolike.ejs  | HTML       |         18 |          0 |          1 |         19 |
+| Total                                                           |            |      4,510 |          1 |        179 |      4,690 |
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
