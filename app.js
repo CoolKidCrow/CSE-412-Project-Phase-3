@@ -214,6 +214,15 @@ app.get('/recommendfriend', checkAuthenticated, async (req, res) => {
     res.render('friendsearch.ejs', { users: result })
 })
 
+app.get('/searchcomment', checkAuthenticated, async (req, res) => {
+    res.render('searchcomment.ejs', { users: [] })
+})
+
+app.post('/searchcomment', checkAuthenticated, async (req, res) => {
+    const result = await database.FetchUserCommentsThatMatchText(req.body.comment);
+    res.render('searchcomment.ejs', { users : result })
+})
+
 
 
 

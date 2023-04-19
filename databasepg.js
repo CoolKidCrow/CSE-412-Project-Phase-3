@@ -369,6 +369,22 @@ async function FetchRecommendedFriends(uid)
     }
 }
 
+async function FetchUserCommentsThatMatchText(text)
+{
+    try{
+        const query = "SELECT u.fname, u.lname, u.uid, COUNT(*) AS num_matches " +
+        "FROM users u " +
+        "INNER JOIN comments c ON u.uid = c.uid " +
+        `WHERE c.text = '${text}' `+
+        "GROUP BY u.uid " +
+        "ORDER BY num_matches DESC"
+        const result = await client.query(query);
+        return result.rows;
+    } catch (err){
+        console.log(err.stack);
+    }
+}
+
 module.exports = { CreateUser, 
     FetchUserByEmail, 
     FetchUserByUID, 
@@ -397,4 +413,5 @@ module.exports = { CreateUser,
     FetchTopContributers,
     FetchPhotosByTags,
     FetchPhotosByTagsAndUID,
-    FetchRecommendedFriends }
+    FetchRecommendedFriends,
+    FetchUserCommentsThatMatchText }

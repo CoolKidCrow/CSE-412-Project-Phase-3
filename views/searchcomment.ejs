@@ -1,0 +1,20 @@
+<a href="/">Homepage</a>
+
+<h1>Search on comments</h1>
+
+<div>
+    <form action='/searchcomment' method="post">
+        <div>
+            <label for="comment">Comment:</label>
+            <input type="text" id="comment" name="comment">
+        </div>
+
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div style="display: flex; flex-direction: column;">
+    <% users.forEach(function(row) { %>
+        <a href="/profile/<%=row.uid%>"><%= row.fname + " " + row.lname %></a>
+    <% }); %>
+</div>
