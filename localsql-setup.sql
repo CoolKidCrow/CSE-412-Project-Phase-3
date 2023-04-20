@@ -1,9 +1,10 @@
-DROP TABLE Users;
 DROP TABLE Friends;
-DROP TABLE Albums;
-DROP TABLE Photos;
 DROP TABLE Likes;
-DROP TABLE Tags
+DROP TABLE Tags;
+DROP TABLE Comments;
+DROP TABLE Photos;
+DROP TABLE Albums;
+DROP TABLE Users;
 
 CREATE TABLE Users (
     UID serial,
@@ -19,8 +20,8 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Friends (
-	UID serial NOT NULL REFERENCES Users(UID),
-	FID serial NOT NULL REFERENCES Users(UID),
+	UID serial NOT NULL REFERENCES Users(UID) ON DELETE CASCADE,
+	FID serial NOT NULL REFERENCES Users(UID) ON DELETE CASCADE,
 	date timestamp default current_timestamp,
 	
 	PRIMARY KEY (UID, FID)
@@ -28,7 +29,7 @@ CREATE TABLE Friends (
 
 CREATE TABLE Albums (
 	AID serial,
-	UID serial NOT NULL REFERENCES Users(UID),
+	UID serial NOT NULL REFERENCES Users(UID) ON DELETE CASCADE,
 	date timestamp default current_timestamp,
 	albumName varchar(255) NOT NULL,
 	
