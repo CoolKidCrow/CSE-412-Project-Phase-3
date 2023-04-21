@@ -43,7 +43,7 @@
         </div>
         <% likes.forEach(function(like) { %>
             <div>
-                <a href="<%=like.uid%></a>"><%=like.fname + " " + like.lname%></a>
+                <a href="/profile/<%=like.uid%>"><%=like.fname + " " + like.lname%></a>
             </div>
             <% }); %>
     </div>
