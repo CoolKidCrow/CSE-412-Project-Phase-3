@@ -14,7 +14,7 @@
 <div id="photo-browse">
     <% photos.forEach(function(photo) { %>
         <div
-            style="display: flex; flex-direction: column; padding: 5px; border: 2px solid; width: 300px; height: 300px;">
+            style="display: flex; flex-direction: column; padding: 5px; border: 2px solid; width: auto; height: auto;">
             <a href="/profile/<%= photo.uid%>">
                 <%= photo.fname + " " + photo.lname%>
             </a>
