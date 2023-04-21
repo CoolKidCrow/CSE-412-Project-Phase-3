@@ -40,7 +40,7 @@ CREATE TABLE Photos (
 	PID serial,
 	AID serial NOT NULL REFERENCES Albums(AID) ON DELETE CASCADE,
 	caption varchar(255),
-	photoUrl varchar(2000),
+	photoUrl varchar(19000),
 	date timestamp default current_timestamp,
 	
 	PRIMARY KEY (PID)
